@@ -12,30 +12,50 @@
         <br /><br />
         <div class="p-1 mt-5 bg-white rounded-3">
             <form>
-                <div class="d-inline-flex justify-content-around">
+                <div class="d-lg-flex justify-content-around">
                     <div class="px-3" style="width:200px">
+                        <label class="form-label mb-0 mt-2 ms-2">From</label>
+                        <input class="form-control form-control-sm border-0  border-bottom pe-0" list="dataListOptions" placeholder="Enter a City or Airport" />
+                        <datalist id="dataListOptions">
+                            <option value="San Francisco"></option>
+                            <option value="New York"></option>
+                            <option value="Seattle"></option>
+							<option value="Los Angeles"></option>
+                            <option value="Chicago"></option>
+                        </datalist>
+
+                        @* First Approach for text box
                         <label class="form-label d-flex mb-0 mt-2">From</label>
                         <input class="form-control border-0 p-0" placeholder="Enter a City or Airport" />
-                        <hr class="mt-0" />
+                        <hr class="mt-0" /> *@
                     </div>
-                    <i class="bi-arrow-left-right my-auto"></i>
+                    <div class="my-auto">
+                        <i class="bi-arrow-left-right"></i>
+                    </div>
                     <div class="px-3" style="width:200px">
-                        <label class="form-label d-flex mb-0 mt-2">To</label>
-                        <input class="form-control border-0 p-0" placeholder="Enter a City or Airport" />
-                        <hr class="mt-0" />
+                        <label class="form-label mb-0 mt-2 ms-2">To</label>
+                        <input class="form-control form-control-sm border-0 border-bottom pe-0" list="dataListOptions" placeholder="Enter a City or Airport" />
                     </div>
                     <div class="px-3" style="width:200px">
                         <label class="form-label d-flex mb-0 mt-2">Departure</label>
                         <input class="form-control border-0 p-0" type="date" placeholder="Enter a City or Airport" />
                         <hr class="mt-0" />
                     </div>
-                    <div class="px-3" style="width:200px">
+                    <div class="px-3" style="width:115px">
                         <label class="form-label d-flex mb-0 mt-2">Passengers</label>
-                        <input class="form-control border-0 p-0" placeholder="Enter a City or Airport" />
+                        <input type="number" min="1" class="form-control border-0 p-0" value="1"/>
                         <hr class="mt-0" />
                     </div>
-                    <div class="px-3 my-auto" style="width:200px">
-                        <button type="submit" class="btn btn-warning" style="width:200px">Search</button>
+                    <div class="my-auto border-bottom">
+                        <select class="form-select border-0">
+                            <option selected>Economy</option>
+                            <option>Business</option>
+                            <option>First Class</option>
+                        </select>
+                    </div>
+                    
+                    <div class="px-3 my-auto">
+                        <button type="submit" class="btn btn-warning float-end" style="width:200px">Search</button>
                     </div>
                 </div>
             </form>

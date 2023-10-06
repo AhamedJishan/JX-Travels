@@ -14,12 +14,13 @@ html {
 }
 
 body {
-    overflow:hidden;
+    overflow: hidden;
     margin-bottom: 60px;
-    background-image: url('../wallpaperflare.com_wallpaper.jpg');
-    background-size:cover;
-    background-origin:content-box;
-    background-repeat:no-repeat;
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0.5)0%,rgba(0,0,0,0.5) 100%), url('../wallpaperflare.com_wallpaper.jpg');
+    /*background-image: url('../wallpaperflare.com_wallpaper.jpg');*/
+    background-size: cover;
+    background-origin: content-box;
+    background-repeat: no-repeat;
 }
 
 #footer {
