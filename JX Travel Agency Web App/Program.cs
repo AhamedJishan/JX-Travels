@@ -1,3 +1,6 @@
+using JX_Travel_Agency_Web_App.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace JX_Travel_Agency_Web_App
 {
     public class Program
@@ -7,6 +10,9 @@ namespace JX_Travel_Agency_Web_App
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddDbContext<AppDbContext>(options=>options.UseSqlServer(
+                builder.Configuration.GetConnectionString("DefaultConnection")));
+
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
