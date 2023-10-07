@@ -4,10 +4,11 @@
     ViewData["Title"] = "Home Page";
 }
 
+@*This list is used as suggestion for the "from" and "to" fields*@
 <datalist id="dataListOptions">
     @foreach (var airport in Model)
     {
-        <option value="@airport.Code - @airport.City"></option>
+        <option value="@airport.Code - @airport.City, @airport.Country"></option>
     }
 </datalist>
 
@@ -25,7 +26,7 @@
                 <div class="d-lg-flex justify-content-around">
                     <div class="px-3" style="width:200px">
                         <label class="form-label mb-0 mt-2 ms-2">From</label>
-                        <input class="form-control form-control-sm border-0  border-bottom pe-0" list="dataListOptions" placeholder="Enter a City or Airport" />
+                        <input class="form-control form-control-sm border-0  border-bottom pe-0 list" list="dataListOptions" placeholder="Enter a City or Airport" />
                         
                         @* First Approach for text box
                         <label class="form-label d-flex mb-0 mt-2">From</label>
@@ -41,7 +42,7 @@
                     </div>
                     <div class="px-3" style="width:200px">
                         <label class="form-label d-flex mb-0 mt-2">Departure</label>
-                        <input class="form-control border-0 p-0" type="date" placeholder="Enter a City or Airport" />
+                        <input class="form-control border-0 p-0" type="date"/>
                         <hr class="mt-0" />
                     </div>
                     <div class="px-3" style="width:115px">
