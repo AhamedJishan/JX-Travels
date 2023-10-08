@@ -14,13 +14,36 @@ html {
 }
 
 body {
-    overflow: hidden;
+    overflow:auto;
     margin-bottom: 60px;
     background-image: linear-gradient(to bottom, rgba(0,0,0,0.5)0%,rgba(0,0,0,0.5) 100%), url('../wallpaperflare.com_wallpaper.jpg');
     /*background-image: url('../wallpaperflare.com_wallpaper.jpg');*/
     background-size: cover;
     background-origin: content-box;
     background-repeat: no-repeat;
+}
+
+.full-width {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+.div-center {
+    display: flex;
+    justify-content: center; /* Horizontally center child within the parent */
+    align-items: center; /* Vertically center child within the parent */
+}
+.div-centerx {
+    display: flex;
+    justify-content: center; /* Horizontally center child within the parent */
+}
+.div-centery {
+    display: flex;
+    align-items: center; /* Vertically center child within the parent */
 }
 
 #footer {
