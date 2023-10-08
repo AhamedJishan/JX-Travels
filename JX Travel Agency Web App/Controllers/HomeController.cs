@@ -19,7 +19,9 @@ namespace JX_Travel_Agency_Web_App.Controllers
         {
             var airportList = _db.Airports.ToList();
             ViewBag.Airports=airportList;
-            return View();
+            ViewBag.CurrentDate = DateTime.Now.Date.ToString();
+            FlightQueryModel flightQueryModel = new FlightQueryModel();
+            return View(flightQueryModel);
         }
 
     }
