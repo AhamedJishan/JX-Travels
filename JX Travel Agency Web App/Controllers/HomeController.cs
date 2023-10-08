@@ -2,6 +2,7 @@
 using JX_Travel_Agency_Web_App.Data.Enums;
 using JX_Travel_Agency_Web_App.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace JX_Travel_Agency_Web_App.Controllers
@@ -17,7 +18,8 @@ namespace JX_Travel_Agency_Web_App.Controllers
         public IActionResult Index()
         {
             var airportList = _db.Airports.ToList();
-            return View(airportList);
+            ViewBag.Airports=airportList;
+            return View();
         }
 
     }

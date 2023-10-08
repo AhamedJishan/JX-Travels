@@ -1,12 +1,11 @@
-﻿@model List<Airport>
-
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
+
 }
 
 @*This list is used as suggestion for the "from" and "to" fields*@
 <datalist id="dataListOptions">
-    @foreach (var airport in Model)
+    @foreach (var airport in ViewBag.Airports)
     {
         <option value="@airport.Code - @airport.City, @airport.Country"></option>
     }
