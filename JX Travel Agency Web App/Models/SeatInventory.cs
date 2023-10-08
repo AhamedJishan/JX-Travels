@@ -5,8 +5,9 @@ namespace JX_Travel_Agency_Web_App.Models
 {
     public class SeatInventory
     {
-        [ForeignKey("Flight")]
+        [Key, ForeignKey("Flight")]
         public int FlightId { get; set; }
+        [Key]
         public string Class { get; set; }
         public string SeatCapacity { get; set; }
         public string SeatAvailable { get; set; }

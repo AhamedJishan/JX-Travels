@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JX_Travel_Agency_Web_App.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231007192722_addedFlightAndSeatInventory")]
-    partial class addedFlightAndSeatInventory
+    [Migration("20231008134624_initialRE")]
+    partial class initialRE
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -59,16 +59,16 @@ namespace JX_Travel_Agency_Web_App.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ArrivalAirport")
+                    b.Property<string>("ArrivalAirportCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("ArrivalTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("DepartureAirport")
+                    b.Property<string>("DepartureAirportCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DepartureTime")
                         .HasColumnType("datetime2");
@@ -79,6 +79,10 @@ namespace JX_Travel_Agency_Web_App.Migrations
 
                     b.HasKey("FlightId");
 
+                    b.HasIndex("ArrivalAirportCode");
+
+                    b.HasIndex("DepartureAirportCode");
+
                     b.ToTable("Flights");
                 });
 
@@ -88,8 +92,7 @@ namespace JX_Travel_Agency_Web_App.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Class")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<float>("Price")
                         .HasColumnType("real");
@@ -102,9 +105,28 @@ namespace JX_Travel_Agency_Web_App.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("FlightId");
+                    b.HasKey("FlightId", "Class");
 
                     b.ToTable("SeatInventories");
+                });
+
+            modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.Flight", b =>
+                {
+                    b.HasOne("JX_Travel_Agency_Web_App.Models.Airport", "ArrivalAirport")
+                        .WithMany("FlightsArriving")
+                        .HasForeignKey("ArrivalAirportCode")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("JX_Travel_Agency_Web_App.Models.Airport", "DepartureAirport")
+                        .WithMany("FlightsDeparting")
+                        .HasForeignKey("DepartureAirportCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ArrivalAirport");
+
+                    b.Navigation("DepartureAirport");
                 });
 
             modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.SeatInventory", b =>
@@ -116,6 +138,13 @@ namespace JX_Travel_Agency_Web_App.Migrations
                         .IsRequired();
 
                     b.Navigation("Flight");
+                });
+
+            modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.Airport", b =>
+                {
+                    b.Navigation("FlightsArriving");
+
+                    b.Navigation("FlightsDeparting");
                 });
 
             modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.Flight", b =>

@@ -11,13 +11,42 @@ namespace JX_Travel_Agency_Web_App.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Flight>()
+                .HasOne(f => f.ArrivalAirport)
+                .WithMany(a => a.FlightsArriving)
+                .HasForeignKey(f => f.ArrivalAirportCode)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Airport>()
+                .HasMany(f => f.FlightsArriving)
+                .WithOne(a => a.ArrivalAirport)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Flight>()
+                .HasOne(f => f.DepartureAirport)
+                .WithMany(a => a.FlightsDeparting)
+                .HasForeignKey(f => f.DepartureAirportCode)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Airport>()
+                .HasMany(f => f.FlightsDeparting)
+                .WithOne(a => a.DepartureAirport)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<SeatInventory>()
                 .HasOne<Flight>(si => si.Flight)
                 .WithMany(f => f.SeatInventories)
-                .HasForeignKey(si=>si.FlightId);
+                .HasForeignKey(si => si.FlightId)
+                .OnDelete(DeleteBehavior.ClientNoAction);
+            modelBuilder.Entity<Flight>()
+                .HasMany(si => si.SeatInventories)
+                .WithOne(f => f.Flight)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<SeatInventory>()
                 .HasKey(nameof(SeatInventory.FlightId), nameof(SeatInventory.Class));
+
+            base.OnModelCreating(modelBuilder);
         }
         public DbSet<Airport> Airports { get; set; }
         public DbSet<Flight> Flights { get; set; }

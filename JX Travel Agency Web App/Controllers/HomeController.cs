@@ -1,4 +1,5 @@
 ﻿using JX_Travel_Agency_Web_App.Data;
+using JX_Travel_Agency_Web_App.Data.Enums;
 using JX_Travel_Agency_Web_App.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
