@@ -4,26 +4,58 @@
 	ViewData["Title"] = "Flight Search Result";
 }
 
-<div class="container-fluid bg-black bg-opacity-10 full-width pb-4">
+<div class="container-fluid full-width pb-4" style="background-color:#F5F5F5">
 	<h1 class="text-white">Search Results</h1>
-	<div class="container bg-white bg-opacity-10 py-1" style="width:1024px">
+	<div class="container py-1" style="width:1024px">
 		@for (int i = 0; i < 6; i++)
 		{
-			<div class="bg-white my-2 rounded-3 row" style="height:125px">
+			<div class="bg-white my-2 rounded-3 row shadow border" style="height:125px">
 				<div class="col-7 border div-center">
-					<div class="bg-warning div-center" style="height:90%;width:95%;">
-						<div class="bg-info border div-center" style="height:90%;width:20%">
+					<div class="div-center" style="height:90%;width:95%;">
+						@* LOGO *@
+						<div class="div-center" style="height:90%;width:20%">
 							<h1>LOGO</h1>
 						</div>
-						<div class="bg-primary border div-centery" style="height:90%;width:80%">
-							<h1>DETAILS</h1>
+						@* FLIGHT DETAILS *@
+						<div class="div-centery" style="height:90%;width:80%">
+							<div class="lh-1 div-centery justify-content-end pe-1" style="height:100%;width:25%;">
+								<p class="text-end fw-normal m-0">
+									<span class="fs-5 fw-normal">DEL</span><br>
+									<span class="fs-2">20:00</span><br>
+									<span class="small fw-light">Thu, 12 Oct</span><br>
+									<span class="small fw-lighter">New Delhi</span><br>
+								</p>
+							</div>
+							<div class="text-center" style="height:100%;width:50%">
+								<div class="mx-auto border-bottom p-0 pt-4" style="height:50%;width:80%;">
+									<span>2hr 10mins</span>
+								</div>
+								<div class="mx-auto border-top" style="height:50%;width:80%">
+									<span>non-stop</span>
+								</div>
+
+							</div>
+							<div class="lh-1 div-centery justify-content-start ps-1" style="height:100%;width:25%;">
+								<p class="text-start fw-normal m-0">
+									<span class="fs-5 fw-normal">BOM</span><br>
+									<span class="fs-2">22:10</span><br>
+									<span class="small fw-light">Thu, 12 Oct</span><br>
+									<span class="small fw-lighter">Mumbai</span><br>
+								</p>
+							</div>
 						</div>
 					</div>
 					
 				</div>
+				@* PRICE *@
 				<div class="col border" style="display:flex; justify-content:center; align-items:center">
-					<div class="bg-warning" style="height:90%;width:95%">
-						<h1>Price Section</h1>
+					<div class="div-center" style="height:45%;width:55%">
+						<h3 class="justify-content-end" style="color:#FF5815">&#8377;4779</h3>
+					</div>
+					<div class="div-center" style="height:90%;width:45%;">
+						<button type="button" class="text-white border-0 rounded justify-content-start" style="width:80%; background-color:#FF5815">
+							<h5>Book</h5>
+						</button>
 					</div>
 				</div>
 			</div>
