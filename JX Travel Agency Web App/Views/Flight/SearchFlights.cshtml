@@ -1,4 +1,4 @@
-﻿@model FlightQueryModel
+﻿@model List<List<Flight>>
 
 @{
 	ViewData["Title"] = "Flight Search Result";
@@ -6,60 +6,88 @@
 
 <div class="container-fluid full-width pb-4" style="background-color:#F5F5F5">
 	<h1 class="text-white">Search Results</h1>
-	<div class="container py-1" style="width:1024px">
-		@for (int i = 0; i < 6; i++)
+	<div class="container py-1  bg-white my-2 rounded-3 shadow border" style="width:1024px">
+		@foreach (var flightDetail in Model)
 		{
-			<div class="bg-white my-2 rounded-3 row shadow border" style="height:125px">
-				<div class="col-7 border div-center">
-					<div class="div-center" style="height:90%;width:95%;">
-						@* LOGO *@
-						<div class="div-center" style="height:90%;width:20%">
-							<h1>LOGO</h1>
-						</div>
-						@* FLIGHT DETAILS *@
-						<div class="div-centery" style="height:90%;width:80%">
-							<div class="lh-1 div-centery justify-content-end pe-1" style="height:100%;width:25%;">
-								<p class="text-end fw-normal m-0">
-									<span class="fs-5 fw-normal">DEL</span><br>
-									<span class="fs-2">20:00</span><br>
-									<span class="small fw-light">Thu, 12 Oct</span><br>
-									<span class="small fw-lighter">New Delhi</span><br>
-								</p>
+			@if (flightDetail.Count>=1)
+			{
+				<div class="row border-bottom" style="height:125px">
+					<div class="col-7 div-center">
+						<div class="div-center" style="height:90%;width:95%;">
+							@* LOGO *@
+							<div class="div-center" style="height:90%;width:15%">
+								<h3>@flightDetail[0].AirlineName</h3>
 							</div>
-							<div class="text-center" style="height:100%;width:50%">
-								<div class="mx-auto border-bottom p-0 pt-4" style="height:50%;width:80%;">
-									<span>2hr 10mins</span>
+							@* FLIGHT DETAILS *@
+							<div class="div-centery" style="height:90%;width:85%">
+								<div class="lh-1 div-centery justify-content-end pe-1" style="height:100%;width:25%;">
+									<p class="text-end fw-normal m-0">
+										<span class="fs-5 fw-normal">@flightDetail[0].DepartureAirportCode</span><br>
+										<span class="fs-2">@flightDetail[0].DepartureTime.ToString("H:mm")</span><br>
+										<span class="small fw-light">@flightDetail[0].DepartureTime.ToString("ddd, dd MMM")</span><br>
+										<span class="small fw-lighter">@flightDetail[0].DepartureAirport.City</span><br>
+									</p>
 								</div>
-								<div class="mx-auto border-top" style="height:50%;width:80%">
-									<span>non-stop</span>
-								</div>
+								<div class="text-center" style="height:100%;width:50%">
+									<div class="mx-auto border-bottom p-0 pt-4" style="height:50%;width:80%;">
+										<span>@flightDetail[0].FlightDuration.ToString(@"hh")hr @flightDetail[0].FlightDuration.ToString(@"mm")min</span>
+									</div>
+									<div class="mx-auto border-top" style="height:50%;width:80%">
+										@if (flightDetail.Count==1)
+										{
+											<span>non stop</span>
+										}else if (flightDetail.Count==2)
+										{
+											<span>1 stop</span>
+										} else if (flightDetail.Count == 3)
+										{
+											<span>2 stop</span>
+										}
+									</div>
 
-							</div>
-							<div class="lh-1 div-centery justify-content-start ps-1" style="height:100%;width:25%;">
-								<p class="text-start fw-normal m-0">
-									<span class="fs-5 fw-normal">BOM</span><br>
-									<span class="fs-2">22:10</span><br>
-									<span class="small fw-light">Thu, 12 Oct</span><br>
-									<span class="small fw-lighter">Mumbai</span><br>
-								</p>
+								</div>
+								<div class="lh-1 div-centery justify-content-start ps-1" style="height:100%;width:25%;">
+									<p class="text-start fw-normal m-0">
+										<span class="fs-5 fw-normal">@flightDetail[0].ArrivalAirportCode</span><br>
+										<span class="fs-2">@flightDetail[0].ArrivalTime.ToString("H:mm")</span><br>
+										<span class="small fw-light">@flightDetail[0].ArrivalTime.ToString("ddd, dd MMM")</span><br>
+										<span class="small fw-lighter">@flightDetail[0].ArrivalAirport.City</span><br>
+									</p>
+								</div>
 							</div>
 						</div>
 					</div>
-					
-				</div>
-				@* PRICE *@
-				<div class="col border" style="display:flex; justify-content:center; align-items:center">
-					<div class="div-center" style="height:45%;width:55%">
-						<h3 class="justify-content-end" style="color:#FF5815">&#8377;4779</h3>
+					@* PRICE *@
+					<div class="col" style="display:flex; justify-content:center; align-items:center">
+						<div class="div-center" style="height:45%;width:55%">
+							<h3 class="justify-content-end" style="color:#FF5815">
+								&#8377;4779</h3>
+						</div>
+						<div class="div-center" style="height:90%;width:45%;">
+							<button type="button" class="text-white border-0 rounded justify-content-start" style="width:80%; background-color:#FF5815">
+								<h5>Book</h5>
+							</button>
+						</div>
 					</div>
-					<div class="div-center" style="height:90%;width:45%;">
-						<button type="button" class="text-white border-0 rounded justify-content-start" style="width:80%; background-color:#FF5815">
-							<h5>Book</h5>
-						</button>
+				</div>
+				@* Collabsable area *@
+				<div class="row" style="">
+					<a class="text-center text-decoration-none" data-bs-toggle="collapse" href="#collapsableFlightDetails" role="button" aria-expanded="false" aria-controls="">
+						<span style="color:#FF5815">Flight Details<i class="bi bi-chevron-down"></i></span>
+					</a>
+					@* Collabsable area *@
+					<div class="collapse" id="collapsableFlightDetails">
+						<div class="border-2 border-top" style="width:100%;">
+							<div class="d-flex border-bottom">
+								<span class="p-2">Air India</span><i class="bi bi-dash p-2"></i>
+								<span class="p-2">A320NEO</span><i class="bi bi-dash p-2"></i>
+								<span class="p-2">Economy</span><i class="bi bi-dash p-2"></i>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
+			}
+			
 		}
-		<h1>asd</h1>
 	</div>
 </div>

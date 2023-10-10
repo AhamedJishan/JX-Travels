@@ -7,7 +7,7 @@ namespace JX_Travel_Agency_Web_App.Models
     {
         public string From { get; set; }
         public string To { get; set; }
-        public DateTime Departure { get; set; }
+        public DateTime DepartureDate { get; set; }
         public int Passengers { get; set; }
 
         public Class Class { get; set; }

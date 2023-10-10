@@ -15,8 +15,16 @@ namespace JX_Travel_Agency_Web_App.Models
         public DateTime DepartureTime { get; set; }
         public DateTime ArrivalTime { get; set; }
 
-        // Relationships
-        public ICollection<SeatInventory>? SeatInventories { get; set; }
+        [NotMapped]
+        public TimeSpan FlightDuration { get 
+            {
+                TimeSpan ts = ArrivalTime - DepartureTime;
+				return ts; 
+            } set {} }
+
+
+		// Relationships
+		public ICollection<SeatInventory>? SeatInventories { get; set; }
 
         [ForeignKey("DepartureAirportCode")]
         public virtual Airport DepartureAirport { get; set; }

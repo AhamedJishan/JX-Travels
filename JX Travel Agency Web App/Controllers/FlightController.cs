@@ -1,14 +1,141 @@
-﻿using JX_Travel_Agency_Web_App.Models;
+﻿using JX_Travel_Agency_Web_App.Data;
+using JX_Travel_Agency_Web_App.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace JX_Travel_Agency_Web_App.Controllers
 {
 	public class FlightController : Controller
 	{
-		[HttpPost]
-		public IActionResult SearchFlights(FlightQueryModel flightQueryModel)
+		private readonly AppDbContext _db;
+        public FlightController(AppDbContext db)
+        {
+            _db = db;
+        }
+
+        [HttpPost]
+		public IActionResult SearchFlights(FlightQueryModel flightQuery)
 		{
-			return View(flightQueryModel);
+			var flightsList = _db.Flights.Include(f=>f.DepartureAirport).Include(f=>f.ArrivalAirport).ToList();
+			List<List<Flight>> filteredListOfFLights = new List<List<Flight>>();
+
+			List<Flight> DepartureDateFilteredFlights = new List<Flight>();
+
+			List<Flight> froms = new List<Flight>();
+			List<Flight> tos = new List<Flight>();
+			List<Flight> tempFLights = new List<Flight>();
+
+			// Departure filter
+			foreach (var flight in flightsList)
+			{
+				if (flight.DepartureTime.ToString("dd-MM-yyyy").Equals(flightQuery.DepartureDate.ToString("dd-MM-yyyy")))
+				{
+					DepartureDateFilteredFlights.Add(flight);
+					continue;
+				}
+			}
+
+			// No Stop flights
+			foreach (var flight in DepartureDateFilteredFlights)
+			{
+				if (flight.DepartureAirportCode.Equals(flightQuery.From.Substring(0,3)) &&
+					flight.ArrivalAirportCode.Equals(flightQuery.To.Substring(0, 3)))
+				{
+					List<Flight> noStopFLight = new List<Flight>();
+					noStopFLight.Add(flight);
+					filteredListOfFLights.Add(noStopFLight);
+					continue;
+				}
+				else if (flight.DepartureAirportCode.Equals(flightQuery.From.Substring(0, 3)))
+                {
+                    froms.Add(flight);
+					continue;
+                }
+				else if (flight.ArrivalAirportCode.Equals(flightQuery.To.Substring(0, 3)))
+				{
+					tos.Add(flight);
+				} else
+				{
+					tempFLights.Add(flight);
+				}
+			}
+
+			List<Flight> fromFlightTrash= new List<Flight>();
+			List<Flight> toFlightTrash = new List<Flight>();
+
+			// One StopFlights
+			foreach (var fromFlight in froms)
+			{
+				List<Flight> oneStopFlight= new List<Flight>();
+
+                foreach (var toFlight in tos)
+                {
+					if (fromFlight.ArrivalAirportCode.Equals(toFlight.DepartureAirportCode))
+					{
+						oneStopFlight.Add(fromFlight);
+						oneStopFlight.Add(toFlight);
+
+						fromFlightTrash.Add(fromFlight);
+						toFlightTrash.Add(toFlight);
+						break;
+					}
+                }
+				filteredListOfFLights.Add(oneStopFlight);
+            }
+
+			foreach (var trashFlight in fromFlightTrash)
+			{
+				foreach (var flight in froms)
+				{
+					if (flight==trashFlight)
+					{
+						froms.Remove(flight);
+						break;
+					}
+				}
+			}
+			foreach (var trashFlight in toFlightTrash)
+			{
+				foreach (var flight in tos)
+				{
+					if (flight == trashFlight)
+					{
+						tos.Remove(flight);
+						break;
+					}
+				}
+			}
+
+
+			// Two Stop Flights
+			if (froms.Count>=1 && tos.Count>=1)
+			{
+				List<Flight> twoStopFLights= new List<Flight>();
+				foreach (var fromFlight in froms)
+				{
+					foreach(var toFlight in tos)
+					{
+						foreach (var midFlight in tempFLights)
+						{
+							bool Break = false;
+							if (fromFlight.ArrivalAirportCode.Equals(midFlight.DepartureAirportCode) && 
+								toFlight.DepartureAirportCode.Equals(midFlight.ArrivalAirportCode))
+							{
+								twoStopFLights.Add(fromFlight);
+								twoStopFLights.Add(midFlight);
+								twoStopFLights.Add(toFlight);
+								Break= true;
+								break;
+							}
+							if (Break) break;
+						}
+					}
+					filteredListOfFLights.Add(twoStopFLights);
+				}
+			}
+			
+			return View(filteredListOfFLights);
 		}
 	}
 }
