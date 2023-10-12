@@ -4,6 +4,7 @@ using JX_Travel_Agency_Web_App.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JX_Travel_Agency_Web_App.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231012144644_U")]
+    partial class U
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,63 +110,6 @@ namespace JX_Travel_Agency_Web_App.Migrations
                     b.ToTable("SeatInventories");
                 });
 
-            modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 101L, 1);
-
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Username")
-                        .IsUnique();
-
-                    b.ToTable("User");
-                });
-
-            modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.UserRole", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserRole");
-                });
-
             modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.Flight", b =>
                 {
                     b.HasOne("JX_Travel_Agency_Web_App.Models.Airport", "ArrivalAirport")
@@ -195,17 +140,6 @@ namespace JX_Travel_Agency_Web_App.Migrations
                     b.Navigation("Flight");
                 });
 
-            modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.UserRole", b =>
-                {
-                    b.HasOne("JX_Travel_Agency_Web_App.Models.User", "User")
-                        .WithOne("Role")
-                        .HasForeignKey("JX_Travel_Agency_Web_App.Models.UserRole", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.Airport", b =>
                 {
                     b.Navigation("FlightsArriving");
@@ -216,12 +150,6 @@ namespace JX_Travel_Agency_Web_App.Migrations
             modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.Flight", b =>
                 {
                     b.Navigation("SeatInventories");
-                });
-
-            modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.User", b =>
-                {
-                    b.Navigation("Role")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -11,6 +11,15 @@ namespace JX_Travel_Agency_Web_App.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Username)
+                .IsUnique();
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Role)
+                .WithOne(ur => ur.User);
+            modelBuilder.Entity<User>(u => u.Property(i => i.Id).UseIdentityColumn(101, 1));
+
             modelBuilder.Entity<Flight>()
                 .HasOne(f => f.ArrivalAirport)
                 .WithMany(a => a.FlightsArriving)
