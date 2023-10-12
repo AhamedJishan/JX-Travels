@@ -17,19 +17,39 @@ namespace JX_Travel_Agency_Web_App.Controllers
         [HttpPost]
 		public IActionResult SearchFlights(FlightQueryModel flightQuery)
 		{
-			var flightsList = _db.Flights.Include(f=>f.DepartureAirport).Include(f=>f.ArrivalAirport).ToList();
+			var flightsList = _db.Flights
+				.Include(f => f.DepartureAirport)
+				.Include(f => f.ArrivalAirport)
+				.Include(f => f.SeatInventories.Where(x => x.Class == flightQuery.Class.ToString()))
+				.ToList();
+
 			List<List<Flight>> filteredListOfFLights = new List<List<Flight>>();
 
 			List<Flight> DepartureDateFilteredFlights = new List<Flight>();
+			List<Flight> ClassFilteredFlightList= new List<Flight>();
 
 			List<Flight> froms = new List<Flight>();
 			List<Flight> tos = new List<Flight>();
 			List<Flight> tempFLights = new List<Flight>();
 
-			// Departure filter
+			// Class Filter
 			foreach (var flight in flightsList)
 			{
-				if (flight.DepartureTime.ToString("dd-MM-yyyy").Equals(flightQuery.DepartureDate.ToString("dd-MM-yyyy")))
+				foreach (var seat in flight.SeatInventories)
+				{
+					if (seat.Class==flightQuery.Class.ToString())
+					{
+						ClassFilteredFlightList.Add(flight);
+						break;
+					}
+				}
+			}
+
+			// Departure filter
+			foreach (var flight in ClassFilteredFlightList)
+			{
+				if (flight.DepartureTime.ToString("dd-MM-yyyy")
+					.Equals(flightQuery.DepartureDate.ToString("dd-MM-yyyy")))
 				{
 					DepartureDateFilteredFlights.Add(flight);
 					continue;
@@ -69,19 +89,24 @@ namespace JX_Travel_Agency_Web_App.Controllers
 			{
 				List<Flight> oneStopFlight= new List<Flight>();
 
-                foreach (var toFlight in tos)
+				bool oneStopFlightFound = false;
+
+				foreach (var toFlight in tos)
                 {
+					
 					if (fromFlight.ArrivalAirportCode.Equals(toFlight.DepartureAirportCode))
 					{
 						oneStopFlight.Add(fromFlight);
 						oneStopFlight.Add(toFlight);
+
+						oneStopFlightFound = true;
 
 						fromFlightTrash.Add(fromFlight);
 						toFlightTrash.Add(toFlight);
 						break;
 					}
                 }
-				filteredListOfFLights.Add(oneStopFlight);
+				if (oneStopFlightFound) filteredListOfFLights.Add(oneStopFlight);
             }
 
 			foreach (var trashFlight in fromFlightTrash)
@@ -128,7 +153,6 @@ namespace JX_Travel_Agency_Web_App.Controllers
 								Break= true;
 								break;
 							}
-							if (Break) break;
 						}
 					}
 					filteredListOfFLights.Add(twoStopFLights);
