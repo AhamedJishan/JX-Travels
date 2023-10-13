@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - JX_Travel_Agency_Web_App</title>
+    <title>@ViewData["Title"] | JX_Travels</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/JX_Travel_Agency_Web_App.styles.css" asp-append-version="true" />
@@ -16,8 +16,8 @@
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid col-10">
                 <a asp-controller="Home" asp-action="Index" class="btn text-white d-inline-flex justify-content-around">
-                    <p class="fs-1" style="font-weight:600">JX</p>
-                    <p class="fs-6 my-auto" style="font-weight:100">travels</p>
+                        <p class="fs-1" style="font-weight:600">JX</p>
+                        <p class="fs-6 my-auto" style="font-weight:100">travels</p>
                 </a>
                 <div class="navbar-nav me-auto">
                     <a class="nav-link text-white px-4" asp-controller="Home" asp-action="Index"><i class="bi-airplane"></i> Flight</a>
@@ -26,12 +26,35 @@
                 </div>
                 <div class="float-end">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link text-white"><i class="bi-gift"></i> Offers</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white"><i class="bi-person"></i> Login|SignUp</a>
-                        </li>
+                            @{
+                                if (User.Identity.IsAuthenticated)
+                                {
+                                    if (User.IsInRole("Admin"))
+                                    {
+                                        <li class="nav-item">
+                                            <a asp-controller="Account" asp-action="Logout" class="nav-link text-white"><i class="bi bi-person-fill"></i>Hey, @User.Identity.Name</a>
+                                        </li>
+                                    } else
+                                    {
+                                        <li class="nav-item">
+                                            <a asp-controller="Account" asp-action="Logout" class="nav-link text-white"><i class="bi bi-person"></i>Hey, @User.Identity.Name</a>
+                                        </li>
+                                    }
+
+                                    <li class="nav-item">
+                                        <a asp-controller="Account" asp-action="Logout" class="nav-link text-white"><i class="bi bi-box-arrow-right"></i> Logout</a>
+                                    </li>
+                                } else
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white"><i class="bi-gift"></i> Offers</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="Account" asp-action="Login" class="nav-link text-white"><i class="bi-person"></i> Login</a>
+                                    </li>
+                                }
+                            }
+                        
                     </ul>
                 </div>
                     

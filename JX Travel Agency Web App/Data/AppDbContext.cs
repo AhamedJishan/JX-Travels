@@ -15,10 +15,6 @@ namespace JX_Travel_Agency_Web_App.Data
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Username)
                 .IsUnique();
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.Role)
-                .WithOne(ur => ur.User);
-            modelBuilder.Entity<User>(u => u.Property(i => i.Id).UseIdentityColumn(101, 1));
 
             modelBuilder.Entity<Flight>()
                 .HasOne(f => f.ArrivalAirport)
@@ -60,5 +56,6 @@ namespace JX_Travel_Agency_Web_App.Data
         public DbSet<Airport> Airports { get; set; }
         public DbSet<Flight> Flights { get; set; }
         public DbSet<SeatInventory> SeatInventories { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

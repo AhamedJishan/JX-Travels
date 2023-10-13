@@ -1,0 +1,64 @@
+﻿@model User
+
+@{
+	ViewData["Title"] = "Register User";
+}
+
+<div class="bg-transparent div-centerx">
+	<div class="rounded-3 shadow pb-3" style="width:35%; background-color:#F5F5F5">
+		<div class="border-bottom text-center p-1">
+			<h1 class=" fw-light" style="color:#003783">Register</h1>
+		</div>
+
+		<div class="mx-auto" style="width:60%">
+			@* <span class="text-danger fs-5">@TempData["ErrorMsg"]</span> *@
+			<form action="Register" method="post">
+				<div asp-validation-summary="All" class="text-danger">@TempData["msg"]</div>
+				<div class="form-floating py-2">
+					<input type="text" asp-for="Username" class="form-control shadow" placeholder="Username" />
+					<label asp-for="Username">Username</label>
+					<span asp-validation-for="Username" class="text-danger"></span>
+				</div>
+				<div class="form-floating py-2">
+					<input type="password" asp-for="Password" class="form-control shadow" placeholder="Password" />
+					<label asp-for="Password"></i>Password</label>
+					<span asp-validation-for="Password" class="text-danger"></span>
+				</div>
+				<div class="form-floating py-2">
+					<input type="text" asp-for="FirstName" class="form-control shadow" placeholder="First Name" />
+					<label asp-for="FirstName">First Name</label>
+					<span asp-validation-for="FirstName" class="text-danger"></span>
+				</div>
+				<div class="form-floating py-2">
+					<input type="text" asp-for="LastName" class="form-control shadow" placeholder="Last Name" />
+					<label asp-for="LastName">Last Name</label>
+					<span asp-validation-for="LastName" class="text-danger"></span>
+				</div>
+				<div class="form-floating py-2">
+					<input type="number" asp-for="Age" class="form-control shadow" placeholder="1" />
+					<label asp-for="Age">Age</label>
+					<span asp-validation-for="Age" class="text-danger"></span>
+				</div>
+				<div class="form-floating py-2">
+					<input type="email" asp-for="Email" class="form-control shadow" placeholder="email@email.com" />
+					<label asp-for="Email">Email</label>
+					<span asp-validation-for="Email" class="text-danger"></span>
+				</div>
+				<div class="form-floating py-2">
+					<div class="form-check form-check-inline">
+						<input asp-for="Gender" class="form-check-input" type="radio" value="Male" checked>
+						<label class="form-check-label" asp-for="Gender">Male</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input asp-for="Gender" class="form-check-input" type="radio" value="Female">
+						<label class="form-check-label" asp-for="Gender">Female</label>
+					</div>
+				</div>
+				<div class="div-centerx py-2">
+					<button type="submit" class="btn shadow fw-bold fs-5" style="color:#003783; background-color:#E0EEFC; width:100%">Register</button>
+				</div>
+			</form>
+		</div>
+
+	</div>
+</div>

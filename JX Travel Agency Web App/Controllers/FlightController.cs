@@ -1,12 +1,14 @@
 ﻿using JX_Travel_Agency_Web_App.Data;
 using JX_Travel_Agency_Web_App.Models;
+using JX_Travel_Agency_Web_App.Models.QueryModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 namespace JX_Travel_Agency_Web_App.Controllers
 {
-	public class FlightController : Controller
+    public class FlightController : Controller
 	{
 		private readonly AppDbContext _db;
         public FlightController(AppDbContext db)
@@ -14,7 +16,7 @@ namespace JX_Travel_Agency_Web_App.Controllers
             _db = db;
         }
 
-        [HttpPost]
+        [HttpPost, Authorize]
 		public IActionResult SearchFlights(FlightQueryModel flightQuery)
 		{
 			var flightsList = _db.Flights
@@ -161,5 +163,21 @@ namespace JX_Travel_Agency_Web_App.Controllers
 			
 			return View(filteredListOfFLights);
 		}
-	}
+
+		public async Task<IActionResult> Flights()
+		{
+			List<Flight>? flights= await _db.Flights.ToListAsync();
+			return View();
+		}
+
+        public IActionResult Airports()
+        {
+            return View();
+        }
+
+        public IActionResult SeatInventory()
+        {
+            return View();
+        }
+    }
 }

@@ -1,4 +1,5 @@
 using JX_Travel_Agency_Web_App.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 namespace JX_Travel_Agency_Web_App
@@ -12,6 +13,13 @@ namespace JX_Travel_Agency_Web_App
             // Add services to the container.
             builder.Services.AddDbContext<AppDbContext>(options=>options.UseSqlServer(
                 builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Account/Login";
+                    options.AccessDeniedPath = "/Account/AccessDenied";
+                });
 
             builder.Services.AddControllersWithViews();
 
@@ -30,6 +38,7 @@ namespace JX_Travel_Agency_Web_App
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

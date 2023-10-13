@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JX_Travel_Agency_Web_App.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231008134624_initialRE")]
-    partial class initialRE
+    [Migration("20231013165705_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,7 +49,10 @@ namespace JX_Travel_Agency_Web_App.Migrations
             modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.Flight", b =>
                 {
                     b.Property<int>("FlightId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FlightId"), 1L, 1);
 
                     b.Property<string>("AircraftType")
                         .IsRequired()
@@ -108,6 +111,52 @@ namespace JX_Travel_Agency_Web_App.Migrations
                     b.HasKey("FlightId", "Class");
 
                     b.ToTable("SeatInventories");
+                });
+
+            modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.Flight", b =>

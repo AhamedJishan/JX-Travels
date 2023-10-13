@@ -5,7 +5,7 @@ namespace JX_Travel_Agency_Web_App.Models
 {
     public class Flight
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Key]
         public int FlightId { get; set; }
         public string AirlineName { get; set; }
         public string AircraftType { get; set; }

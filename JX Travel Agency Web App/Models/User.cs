@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using JX_Travel_Agency_Web_App.Data.Enums;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JX_Travel_Agency_Web_App.Models
@@ -11,7 +13,9 @@ namespace JX_Travel_Agency_Web_App.Models
         public string Username { get; set; }
         [Required, DataType(DataType.Password)]
         public string Password { get; set; }
-        [Required]
+        [DefaultValue(UserRoles.User)]
+		public UserRoles Role { get; set; }
+		[Required]
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
@@ -19,9 +23,6 @@ namespace JX_Travel_Agency_Web_App.Models
         public string Gender { get; set; }
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
-
-        // Relationships
-        public virtual UserRole Role { get; set; }
 
     }
 }

@@ -1,7 +1,7 @@
 ﻿using JX_Travel_Agency_Web_App.Data.Enums;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace JX_Travel_Agency_Web_App.Models
+namespace JX_Travel_Agency_Web_App.Models.QueryModel
 {
     public class FlightQueryModel
     {

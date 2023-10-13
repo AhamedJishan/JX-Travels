@@ -47,7 +47,10 @@ namespace JX_Travel_Agency_Web_App.Migrations
             modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.Flight", b =>
                 {
                     b.Property<int>("FlightId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FlightId"), 1L, 1);
 
                     b.Property<string>("AircraftType")
                         .IsRequired()
@@ -114,7 +117,7 @@ namespace JX_Travel_Agency_Web_App.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 101L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
@@ -139,6 +142,9 @@ namespace JX_Travel_Agency_Web_App.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -148,21 +154,7 @@ namespace JX_Travel_Agency_Web_App.Migrations
                     b.HasIndex("Username")
                         .IsUnique();
 
-                    b.ToTable("User");
-                });
-
-            modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.UserRole", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserRole");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.Flight", b =>
@@ -195,17 +187,6 @@ namespace JX_Travel_Agency_Web_App.Migrations
                     b.Navigation("Flight");
                 });
 
-            modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.UserRole", b =>
-                {
-                    b.HasOne("JX_Travel_Agency_Web_App.Models.User", "User")
-                        .WithOne("Role")
-                        .HasForeignKey("JX_Travel_Agency_Web_App.Models.UserRole", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.Airport", b =>
                 {
                     b.Navigation("FlightsArriving");
@@ -216,12 +197,6 @@ namespace JX_Travel_Agency_Web_App.Migrations
             modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.Flight", b =>
                 {
                     b.Navigation("SeatInventories");
-                });
-
-            modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.User", b =>
-                {
-                    b.Navigation("Role")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
