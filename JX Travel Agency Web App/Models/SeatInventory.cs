@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JX_Travel_Agency_Web_App.Models
@@ -9,8 +10,9 @@ namespace JX_Travel_Agency_Web_App.Models
         public int FlightId { get; set; }
         [Key]
         public string Class { get; set; }
-        public string SeatCapacity { get; set; }
-        public string SeatAvailable { get; set; }
+        public int SeatCapacity { get; set; }
+        [DefaultValue(0)]
+        public int SeatAvailable { get; set; }
         public float Price { get; set; }
 
         //Relationships
