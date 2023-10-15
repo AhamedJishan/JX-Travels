@@ -1,0 +1,53 @@
+﻿@model Airport
+
+@{
+	ViewData["Title"] = "Edit Airport";
+}
+
+<datalist id="AirportList">
+	@foreach (var airport in ViewBag.AirportList)
+	{
+		<option value="@airport.Code - @airport.City, @airport.Country"></option>
+	}
+</datalist>
+
+
+<div class="bg-transparent div-centerx pt-5">
+	<div class="rounded-3 shadow pb-5" style="width:35%; background-color:#F5F5F5">
+		<div class="border-bottom text-center p-1">
+			<h1 class=" fw-light" style="color:#003783">Edit Airport</h1>
+		</div>
+
+		<div class="mx-auto py-1" style="width:60%">
+			@* <span class="text-danger fs-5">@TempData["ErrorMsg"]</span> *@
+			<form action="EditAirport" method="post">
+				<div class="form-floating py-2">
+					<input type="text" asp-for="Code" class="form-control shadow" value="@Model.Code" placeholder="Code" />
+					<label asp-for="Code" class="div-centery text-secondary">Code</label>
+					<span asp-validation-for="Code" class="text-danger"></span>
+				</div>
+				<div class="form-floating py-2">
+					<input type="text" asp-for="Name" value="@Model.Name" class="form-control shadow" placeholder="Name" />
+					<label asp-for="Name" class="div-centery text-secondary">Name</label>
+					<span asp-validation-for="Name" class="text-danger"></span>
+				</div>
+				<div class="form-floating py-2">
+					<input type="text" asp-for="City" value="@Model.City" class="form-control shadow" placeholder="City" />
+					<label asp-for="City" class="div-centery text-secondary">City</label>
+					<span asp-validation-for="City" class="text-danger"></span>
+				</div>
+				<div class="form-floating py-2">
+					<input type="text" asp-for="Country" value="@Model.Country" class="form-control shadow" placeholder="Country" />
+					<label asp-for="Country" class="div-centery text-secondary">Country</label>
+					<span asp-validation-for="Country" class="text-danger"></span>
+				</div>
+				<div class="div-centerx py-2">
+					<button type="submit" class="btn shadow fw-bold fs-5" style="color:#003783; background-color:#E0EEFC; width:100%">
+						Edit
+					</button>
+				</div>
+			</form>
+		</div>
+
+	</div>
+</div>

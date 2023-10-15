@@ -1,0 +1,45 @@
+﻿@model Airport
+
+@{
+	ViewData["Title"] = "Delete Airport";
+}
+
+<div class="bg-transparent div-centerx pt-5">
+	<div class="rounded-3 shadow pb-5" style="width:35%; background-color:#F5F5F5">
+		<div class="border-bottom text-center p-1">
+			<h1 class=" fw-light" style="color:#FF0000">Delete Airport?</h1>
+		</div>
+
+		<div class="mx-auto py-1" style="width:60%">
+			<span class="text-danger fs-5">@TempData["ErrorMsg"]</span>
+			<form action="DeletAirport" method="post">
+				<div class="form-floating py-2">
+					<input type="text" asp-for="Code" value="@Model.Code" class="form-control shadow" placeholder="Code" readonly/>
+					<label asp-for="Code" class="div-centery text-secondary">Code</label>
+					<span asp-validation-for="Code" class="text-danger"></span>
+				</div>
+				<div class="form-floating py-2">
+					<input type="text" asp-for="Name" value="@Model.Name" class="form-control shadow" placeholder="Name" readonly />
+					<label asp-for="Name" class="div-centery text-secondary">Name</label>
+					<span asp-validation-for="Name" class="text-danger"></span>
+				</div>
+				<div class="form-floating py-2">
+					<input type="text" asp-for="City" value="@Model.City" class="form-control shadow" placeholder="City" readonly />
+					<label asp-for="City" class="div-centery text-secondary">City</label>
+					<span asp-validation-for="City" class="text-danger"></span>
+				</div>
+				<div class="form-floating py-2">
+					<input type="text" asp-for="Country" value="@Model.Country" class="form-control shadow" placeholder="Country" readonly />
+					<label asp-for="Country" class="div-centery text-secondary">Country</label>
+					<span asp-validation-for="Country" class="text-danger"></span>
+				</div>
+				<div class="div-centerx py-2">
+					<button type="submit" class="btn shadow fw-bold fs-5" style="color:#FF0000; background-color:#FFE0E0; width:100%">
+						Delete
+					</button>
+				</div>
+			</form>
+		</div>
+
+	</div>
+</div>

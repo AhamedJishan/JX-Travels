@@ -66,7 +66,7 @@
 				@* PRICE *@
 				<div class="col" style="display:flex; justify-content:center; align-items:center">
 					<div class="div-center" style="height:45%;width:55%">
-						<h3 class="justify-content-end" style="color:#FF5815">
+						<h3 class="justify-content-end" style="color:#003783">
 							@{
 								float totalFare = 0f;
 								foreach (var flight in flightDetail)
@@ -82,7 +82,7 @@
 						</h3>
 					</div>
 					<div class="div-center" style="height:90%;width:45%;">
-						<button type="button" class="text-white border-0 rounded justify-content-start" style="width:80%; background-color:#FF5815">
+						<button type="button" class="border-0 rounded justify-content-start" style="width:80%; color:#003783; background-color:#E0EEFC">
 							<h5>Book</h5>
 						</button>
 					</div>
@@ -91,7 +91,7 @@
 			@* Collabsable area *@
 			<div class="row div-centerx">
 				<a class="text-center text-decoration-none" data-bs-toggle="collapse" href="#collapse-@flightDetail[0].FlightId" role="button" aria-expanded="false" aria-controls="">
-					<span style="color:#FF5815">Flight Details<i class="bi bi-chevron-down"></i></span>
+					<span style="color:#003783">Flight Details<i class="bi bi-chevron-down"></i></span>
 				</a>
 				@* Collabsable area *@
 				<div class="collapse" id="collapse-@flightDetail[0].FlightId" style="width:600px">

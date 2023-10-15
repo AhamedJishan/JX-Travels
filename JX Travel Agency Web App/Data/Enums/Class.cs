@@ -2,7 +2,7 @@
 {
     public enum Class
     {
-        Economy = 1,
+        Economy =1,
         Business,
         FirstClass
     }

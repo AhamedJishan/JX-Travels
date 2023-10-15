@@ -3,6 +3,7 @@ using JX_Travel_Agency_Web_App.Models;
 using JX_Travel_Agency_Web_App.Models.QueryModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
@@ -166,18 +167,100 @@ namespace JX_Travel_Agency_Web_App.Controllers
 
 		public async Task<IActionResult> Flights()
 		{
-			List<Flight>? flights= await _db.Flights.ToListAsync();
+			List<Flight>? flights= await _db.Flights
+				.Include(f=>f.ArrivalAirport)
+				.Include(f => f.DepartureAirport)
+				.ToListAsync();
+			return View(flights);
+		}
+		
+		public IActionResult AddFlight()
+		{
+			ViewBag.AirportList=_db.Airports.ToList();
 			return View();
 		}
+		[HttpPost]
+		public async Task<IActionResult> AddFlight(IFormCollection form)
+		{
+			if (ModelState.IsValid)
+			{
+				Flight flightEntry = new Flight();
+				flightEntry.AirlineName = form["AirlineName"];
+				flightEntry.FlightNumber = form["FlightNumber"];
+				flightEntry.AircraftType = form["AircraftType"];
+				flightEntry.DepartureAirportCode = form["DepartureAirport"].ToString().Substring(0,3);
+				flightEntry.ArrivalAirportCode = form["ArrivalAirport"].ToString().Substring(0,3);
 
-        public IActionResult Airports()
-        {
-            return View();
-        }
+				flightEntry.DepartureTime = DateTime.Parse(form["DepartureDate"].ToString() +" "+ form["DepartureTime"].ToString());
+				flightEntry.ArrivalTime = DateTime.Parse(form["ArrivalDate"].ToString() + " " + form["ArrivalTime"].ToString());
 
-        public IActionResult SeatInventory()
-        {
-            return View();
-        }
+				await _db.Flights.AddAsync(flightEntry);
+				await _db.SaveChangesAsync();
+
+				return RedirectToAction(nameof(Flights));
+			}
+			return View(form);
+		}
+
+		public IActionResult EditFlight(int id)
+		{
+			TempData["FlightId"]=id;
+			ViewBag.AirportList = _db.Airports.ToList();
+			var flight=_db.Flights.FirstOrDefault(f=>f.FlightId == id);
+			return View(flight);
+		}
+		[HttpPost]
+		public async Task<IActionResult> EditFlight(IFormCollection form)
+		{
+			if (ModelState.IsValid)
+			{
+				int flightID = (int)TempData["FlightId"];
+				Flight flightEntry = _db.Flights.FirstOrDefault(f=>f.FlightId==flightID);
+				flightEntry.AirlineName = form["AirlineName"];
+				flightEntry.FlightNumber = form["FlightNumber"];
+				flightEntry.AircraftType = form["AircraftType"];
+				flightEntry.DepartureAirportCode = form["DepartureAirport"].ToString().Substring(0, 3);
+				flightEntry.ArrivalAirportCode = form["ArrivalAirport"].ToString().Substring(0, 3);
+
+				flightEntry.DepartureTime = DateTime.Parse(form["DepartureDate"].ToString() + " " + form["DepartureTime"].ToString());
+				flightEntry.ArrivalTime = DateTime.Parse(form["ArrivalDate"].ToString() + " " + form["ArrivalTime"].ToString());
+
+				_db.Flights.Update(flightEntry);
+				await _db.SaveChangesAsync();
+
+				TempData["msg"] = "Flight -" + flightID.ToString() + " Edited successfully!";
+
+				return RedirectToAction(nameof(Flights));
+			}
+			return View(form);
+		}
+
+		public IActionResult DeleteFlight(int id)
+		{
+			TempData["FlightId"] = id;
+			ViewBag.AirportList = _db.Airports.ToList();
+			var flight = _db.Flights.FirstOrDefault(f => f.FlightId == id);
+			return View(flight);
+		}
+		[HttpPost]
+		public async Task<IActionResult> DeleteFlight(IFormCollection form)
+		{
+			if (ModelState.IsValid)
+			{
+				int flightID = (int)TempData["FlightId"];
+				Flight flightEntry = _db.Flights.FirstOrDefault(f => f.FlightId == flightID);
+				if (flightEntry != null)
+				{
+					_db.Flights.Remove(flightEntry);
+					await _db.SaveChangesAsync();
+
+					TempData["msg"] = "Flight -" + flightID.ToString() + " Deleted successfully!";
+
+					return RedirectToAction(nameof(Flights));
+				}
+			}
+			return View(form);
+		}
+		
     }
 }

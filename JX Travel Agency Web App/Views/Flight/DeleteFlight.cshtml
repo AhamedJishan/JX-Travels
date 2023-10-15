@@ -1,0 +1,93 @@
+﻿@model Flight
+
+@{
+	ViewData["Title"] = "Delete a Flight";
+}
+<div class="bg-transparent div-centerx">
+	<div class="rounded-3 shadow pb-3" style="width:45%; background-color:#F5F5F5">
+		<div class="border-bottom text-center p-1">
+			<h1 class="fw-light text-danger">Delete Flight?</h1>
+		</div>
+
+		<div class="mx-auto" style="width:95%">
+			@* <span class="text-danger fs-5">@TempData["ErrorMsg"]</span> *@
+			<form action="EditFlight" method="post">
+				<div asp-validation-summary="All" class="text-danger">@TempData["msg"]</div>
+				<div class="d-flex">
+					@* AirlineName, FlightNumber, AircraftType *@
+					<div class="border-end pe-2 my-auto" style="width:35%">
+						<div class="form-floating py-1">
+							<input disabled name="AirlineName" type="text" class="form-control shadow" value="@Model.AirlineName" placeholder="Airline Name" />
+							<label class="text-secondary div-centery">Airline Name</label>
+							@* <span asp-validation-for="Username" class="text-danger"></span> *@
+						</div>
+						<div class="form-floating py-1">
+							<input disabled name="FlightNumber" type="text" class="form-control shadow" value="@Model.FlightNumber" placeholder="Flight Number" />
+							<label class="text-secondary">Flight Number</label>
+							@* <span asp-validation-for=" div-centeryUsername" class="text-danger"></span> *@
+						</div>
+						<div class="form-floating py-1">
+							<input disabled name="AircraftType" type="text" class="form-control shadow" value="@Model.AircraftType" placeholder="Aircraft Type" />
+							<label class="text-secondary">Aircraft Type</label>
+							@* <span asp-validation-for=" div-centeryUsername" class="text-danger"></span> *@
+						</div>
+					</div>
+					<div class="border-start ps-2" style="width:65%">
+						<div class="d-flex justify-content-between px-2">
+							<h4 class=" fw-light" style="color:#003783">Departure</h4>
+							<h4 class=" fw-light" style="color:#003783">Arrival</h4>
+						</div>
+						@* Airports *@
+						<div class="d-flex">
+							<div class="form-floating py-1 pe-1">
+								<input disabled name="DepartureAirport" type="text" class="form-control shadow"
+									   value="@Model.DepartureAirportCode - @Model.DepartureAirport.City" placeholder="Departure Airport" />
+								<label class="text-secondary">Departure Airport</label>
+								@* <span asp-validation-for=" div-centeryUsername" class="text-danger"></span> *@
+							</div>
+							<i class="bi bi-arrow-right my-auto"></i>
+							<div class="form-floating py-1 ps-1">
+								<input disabled name="ArrivalAirport" type="text" class="form-control shadow"
+									   value="@Model.ArrivalAirportCode - @Model.ArrivalAirport.City" placeholder="Arrival Airport" />
+								<label class="text-secondary">Arrival Airport</label>
+								@* <span asp-validation-for=" div-centeryUsername" class="text-danger"></span> *@
+							</div>
+						</div>
+						@* Dates *@
+						<div class="d-flex">
+							<div class="form-floating py-1 ps-1" style="width:50%">
+								<input disabled name="DepartureDate" type="date" value="@Model.DepartureTime.ToString("yyyy-MM-dd")" class="form-control shadow" />
+								<label class="text-secondary">Departure Date</label>
+								@* <span asp-validation-for=" div-centeryUsername" class="text-danger"></span> *@
+							</div>
+							<div class="form-floating py-1 ps-1" style="width:50%">
+								<input disabled name="ArrivalDate" type="date" value="@Model.ArrivalTime.ToString("yyyy-MM-dd")" class="form-control shadow" />
+								<label class="text-secondary">Arrival Date</label>
+								@* <span asp-validation-for=" div-centeryUsername" class="text-danger"></span> *@
+							</div>
+						</div>
+						@* Time *@
+						<div class="d-flex justify-content-between">
+							<div class="form-floating py-1 ps-1" style="width:50%">
+								<input disabled name="DepartureTime" type="time" value="@Model.DepartureTime.TimeOfDay" class="form-control shadow" />
+								<label class="text-secondary">Departure Time</label>
+								@* <span asp-validation-for=" div-centeryUsername" class="text-danger"></span> *@
+							</div>
+							<div class="form-floating py-1 ps-1" style="width:50%">
+								<input disabled name="ArrivalTime" type="time" value="@Model.ArrivalTime.TimeOfDay" class="form-control shadow" />
+								<label class="text-secondary">Arrival Time</label>
+								@* <span asp-validation-for=" div-centeryUsername" class="text-danger"></span> *@
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="div-centerx py-2">
+					<button type="submit" class="btn shadow fw-bold fs-5" style="color:#FF0000; background-color:#FFE0E0; width:100%">
+						Delete
+					</button>
+				</div>
+			</form>
+		</div>
+
+	</div>
+</div>

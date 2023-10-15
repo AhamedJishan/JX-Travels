@@ -14,12 +14,15 @@ html {
 }
 
 body {
-    overflow:auto;
-    overflow-x:hidden;
+    overflow: auto;
+    overflow-x: hidden;
     margin-bottom: 60px;
-    background-image: linear-gradient(to bottom, rgba(0,0,0,0.5)0%,rgba(0,0,0,0.5) 100%), url('../wallpaperflare.com_wallpaper.jpg');
-    /*background-image: url('../wallpaperflare.com_wallpaper.jpg');*/
-    background-size: cover;
+
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0.5)0%,rgba(0,0,0,0.5) 100%), url('../obtq.jpg');
+
+    /*background-image: linear-gradient(to bottom, rgba(0,0,0,0.5)0%,rgba(0,0,0,0.5) 100%), url('../wallpaperflare.com_wallpaper.jpg');
+    background-image: url('../wallpaperflare.com_wallpaper.jpg');*/
+    background-size: auto;
     background-origin: content-box;
     background-repeat: no-repeat;
 }

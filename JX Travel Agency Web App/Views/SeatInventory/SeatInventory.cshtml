@@ -1,0 +1,72 @@
+﻿@model List<SeatInventory>
+
+@{
+	ViewData["Title"] = "Seat Inventory";
+}
+
+
+<div class="bg-white rounded mx-auto" style="min-height:620px; width:70%">
+	<div>
+		<div class="bg-white border-bottom rounded py-1 px-4 d-flex justify-content-between">
+			@* Title *@
+			<div>
+				<h1 class="fw-light" style="color:#003783">Seat Inventory</h1>
+			</div>
+			@{
+				if (TempData["msg"] != null)
+				{
+					<span class="alert alert-info">
+						@TempData["msg"]
+					</span>
+				}
+			}
+			<div>
+				<a asp-action="AddSeat" class="btn btn-success float-end mt-2" style="width:125px">
+					<i class="bi bi-plus-circle float-start"></i>Add
+				</a>
+			</div>
+		</div>
+		<div class="mx-auto pt-3 px-4" style="">
+			@* SeatInventory Table *@
+			<table class="table table-sm table-hover shadow-sm">
+				<thead style="color:#003783; background-color:#E0EEFC">
+					<tr>
+						<th class="fs-5 fw-normal" scope="col">FlightId</th>
+						<th class="fs-5 fw-normal" scope="col">Class</th>
+						<th class="fs-5 fw-normal" scope="col">Total Seats</th>
+						<th class="fs-5 fw-normal" scope="col">Seats Available</th>
+						<th class="fs-5 fw-normal" scope="col">Price</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody class="bg-white">
+					@{
+						foreach (SeatInventory seat in Model)
+						{
+							<tr>
+								<td class="fw-bold py-0">@seat.FlightId</td>
+								<td class="py-0">@seat.Class</td>
+								<td class="py-0">@seat.SeatCapacity</td>
+								<td class="py-0">@seat.SeatAvailable</td>
+								<td class="py-0">@seat.Price</td>
+
+								<td class="py-0">
+									<div class="dropdown">
+										<button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+											<i class="bi bi-three-dots-vertical"></i>
+										</button>
+										<ul class="dropdown-menu">
+											@*<li><a class="dropdown-item" href="#" style="color:#003783"><i class="bi bi-eye"></i> View</a></li>*@
+											<li><a asp-action="Editseat" asp-route-id="@seat.FlightId @seat.Class" class="dropdown-item" style="color:#003783"><i class="bi bi-pencil"></i> Edit</a></li>
+											<li><a asp-action="Deleteseat" asp-route-id="@seat.FlightId @seat.Class" class="dropdown-item text-danger"><i class="bi bi-trash3"></i> Delete</a></li>
+										</ul>
+									</div>
+								</td>
+							</tr>
+						}
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
