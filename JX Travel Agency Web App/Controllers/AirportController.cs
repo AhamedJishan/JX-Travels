@@ -1,11 +1,13 @@
 ﻿using JX_Travel_Agency_Web_App.Data;
 using JX_Travel_Agency_Web_App.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace JX_Travel_Agency_Web_App.Controllers
 {
-	public class AirportController : Controller
+    [Authorize(Roles = "Admin")]
+    public class AirportController : Controller
 	{
 		private readonly AppDbContext _db;
         public AirportController(AppDbContext db)
@@ -89,11 +91,5 @@ namespace JX_Travel_Agency_Web_App.Controllers
 			}
 			return View(airport);
 		}
-
-
-		//public async Task<IActionResult> SeatInventory()
-		//{
-		//	return View();
-		//}
 	}
 }

@@ -106,5 +106,10 @@ namespace JX_Travel_Agency_Web_App.Controllers
             }
             return false;
         }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }

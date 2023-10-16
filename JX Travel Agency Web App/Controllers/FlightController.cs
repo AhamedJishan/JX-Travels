@@ -17,9 +17,11 @@ namespace JX_Travel_Agency_Web_App.Controllers
             _db = db;
         }
 
-        [HttpPost, Authorize]
+        [HttpPost]
 		public IActionResult SearchFlights(FlightQueryModel flightQuery)
 		{
+			TempData["Passengers"] = flightQuery.Passengers;
+			TempData.Keep("Passengers");
 			var flightsList = _db.Flights
 				.Include(f => f.DepartureAirport)
 				.Include(f => f.ArrivalAirport)
@@ -165,7 +167,8 @@ namespace JX_Travel_Agency_Web_App.Controllers
 			return View(filteredListOfFLights);
 		}
 
-		public async Task<IActionResult> Flights()
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Flights()
 		{
 			List<Flight>? flights= await _db.Flights
 				.Include(f=>f.ArrivalAirport)
@@ -173,13 +176,14 @@ namespace JX_Travel_Agency_Web_App.Controllers
 				.ToListAsync();
 			return View(flights);
 		}
-		
-		public IActionResult AddFlight()
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult AddFlight()
 		{
 			ViewBag.AirportList=_db.Airports.ToList();
 			return View();
 		}
-		[HttpPost]
+		[HttpPost, Authorize(Roles ="Admin")]
 		public async Task<IActionResult> AddFlight(IFormCollection form)
 		{
 			if (ModelState.IsValid)
@@ -201,15 +205,16 @@ namespace JX_Travel_Agency_Web_App.Controllers
 			}
 			return View(form);
 		}
-
-		public IActionResult EditFlight(int id)
+        [Authorize(Roles = "Admin")]
+        public IActionResult EditFlight(int id)
 		{
 			TempData["FlightId"]=id;
 			ViewBag.AirportList = _db.Airports.ToList();
 			var flight=_db.Flights.FirstOrDefault(f=>f.FlightId == id);
 			return View(flight);
 		}
-		[HttpPost]
+
+		[HttpPost, Authorize(Roles = "Admin")]
 		public async Task<IActionResult> EditFlight(IFormCollection form)
 		{
 			if (ModelState.IsValid)
@@ -235,14 +240,15 @@ namespace JX_Travel_Agency_Web_App.Controllers
 			return View(form);
 		}
 
-		public IActionResult DeleteFlight(int id)
+        [Authorize(Roles = "Admin")]
+        public IActionResult DeleteFlight(int id)
 		{
 			TempData["FlightId"] = id;
 			ViewBag.AirportList = _db.Airports.ToList();
 			var flight = _db.Flights.FirstOrDefault(f => f.FlightId == id);
 			return View(flight);
 		}
-		[HttpPost]
+		[HttpPost, Authorize(Roles = "Admin")]
 		public async Task<IActionResult> DeleteFlight(IFormCollection form)
 		{
 			if (ModelState.IsValid)

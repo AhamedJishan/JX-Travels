@@ -1,0 +1,49 @@
+﻿@model SeatInventory
+
+@{
+	ViewData["Title"] = "Delete Seat";
+}
+
+<div class="bg-transparent div-centerx pt-5">
+	<div class="rounded-3 shadow pb-5" style="width:35%; background-color:#F5F5F5">
+		<div class="border-bottom text-center p-1">
+			<h1 class=" fw-light" style="color:#FF0000">Delete Seat</h1>
+		</div>
+
+		<div class="mx-auto py-1" style="width:60%">
+			<span class="text-danger fs-5">@TempData["ErrorMsg"]</span>
+			<form action="DeleteSeat" method="post">
+				<div asp-validation-summary="All"></div>
+				<div class="form-floating py-2">
+					<input readonly type="text" asp-for="FlightId" value="@Model.FlightId" class="form-control shadow" placeholder="000" />
+					<label asp-for="FlightId" class="div-centery text-secondary">FlightId</label>
+					<span asp-validation-for="FlightId" class="text-danger"></span>
+				</div>
+				<div class="form-floating py-2">
+					<input readonly type="text" asp-for="Class" value="@Model.Class" class="form-control shadow" placeholder="000" />
+					<label asp-for="Class" class="div-centery text-secondary">Class</label>
+					<span asp-validation-for="Class" class="text-danger"></span>
+				</div>
+				<div class="form-floating py-2">
+					<input readonly type="number" asp-for="SeatCapacity" value="@Model.SeatCapacity" class="form-control shadow" placeholder="0" />
+					<label asp-for="SeatCapacity" class="div-centery text-secondary">SeatCapacity</label>
+					<span asp-validation-for="SeatCapacity" class="text-danger"></span>
+				</div>
+				<div class="form-floating py-2">
+					<div class="input-group">
+						<span class="input-group-text"><i class="bi bi-currency-rupee"></i></span>
+						<input readonly type="number" asp-for="Price" value="@Model.Price" class="form-control shadow" placeholder="Price INR" />
+					</div>
+					@* <label asp-for="Price" class="div-centery text-secondary"><i class="bi bi-currency-rupee"></i></label> *@
+					<span asp-validation-for="Price" class="text-danger"></span>
+				</div>
+				<div class="div-centerx py-2">
+					<button type="submit" class="btn shadow fw-bold fs-5" style="color:#FF0000; background-color:#FFE0E0; width:100%">
+						Delete
+					</button>
+				</div>
+			</form>
+		</div>
+
+	</div>
+</div>
