@@ -68,23 +68,33 @@
 					<div class="div-center" style="height:45%;width:55%">
 						<h3 class="justify-content-end" style="color:#003783">
 							@{
+								string flightIdConcat = "";
 								float totalFare = 0f;
+								string Class =null;
 								foreach (var flight in flightDetail)
 								{
 									var flightSeat = flight.SeatInventories.FirstOrDefault();
+									if (Class ==null) Class = flightSeat.Class;
 									if (flightSeat != null)
 									{
 										totalFare += flightSeat.Price;
+										flightIdConcat += flight.FlightId.ToString()+"_";
 									}
 								}
+								flightIdConcat=flightIdConcat.Remove(flightIdConcat.Length-1);
 							}
 							&#8377;@totalFare
 						</h3>
 					</div>
+					@* Booking button *@
 					<div class="div-center" style="height:90%;width:45%;">
-						<button type="button" class="border-0 rounded justify-content-start" style="width:80%; color:#003783; background-color:#E0EEFC">
+						<a asp-controller="Booking" asp-action="Booking" asp-route-id="@flightIdConcat|@Class|@totalFare" type="button" class="btn border-0 rounded justify-content-start" style="width:80%; color:#003783; background-color:#E0EEFC">
 							<h5>Book</h5>
-						</button>
+						</a>
+						@{
+							// Reset Class
+							Class = null;
+						}
 					</div>
 				</div>
 			</div>

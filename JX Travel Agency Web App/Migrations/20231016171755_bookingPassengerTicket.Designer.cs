@@ -4,6 +4,7 @@ using JX_Travel_Agency_Web_App.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JX_Travel_Agency_Web_App.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231016171755_bookingPassengerTicket")]
+    partial class bookingPassengerTicket
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,7 +43,7 @@ namespace JX_Travel_Agency_Web_App.Migrations
 
                     b.HasKey("Code");
 
-                    b.ToTable("Airports", (string)null);
+                    b.ToTable("Airports");
                 });
 
             modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.Booking", b =>
@@ -66,7 +68,7 @@ namespace JX_Travel_Agency_Web_App.Migrations
 
                     b.HasKey("BookingId");
 
-                    b.ToTable("Bookings", (string)null);
+                    b.ToTable("Bookings");
                 });
 
             modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.Flight", b =>
@@ -109,7 +111,7 @@ namespace JX_Travel_Agency_Web_App.Migrations
 
                     b.HasIndex("DepartureAirportCode");
 
-                    b.ToTable("Flights", (string)null);
+                    b.ToTable("Flights");
                 });
 
             modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.Passenger", b =>
@@ -137,7 +139,7 @@ namespace JX_Travel_Agency_Web_App.Migrations
 
                     b.HasKey("PassengerId");
 
-                    b.ToTable("Passengers", (string)null);
+                    b.ToTable("Passengers");
                 });
 
             modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.SeatInventory", b =>
@@ -159,7 +161,7 @@ namespace JX_Travel_Agency_Web_App.Migrations
 
                     b.HasKey("FlightId", "Class");
 
-                    b.ToTable("SeatInventories", (string)null);
+                    b.ToTable("SeatInventories");
                 });
 
             modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.Ticket", b =>
@@ -195,7 +197,7 @@ namespace JX_Travel_Agency_Web_App.Migrations
                     b.HasIndex("PassengerId")
                         .IsUnique();
 
-                    b.ToTable("Tickets", (string)null);
+                    b.ToTable("Tickets");
                 });
 
             modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.User", b =>
@@ -241,7 +243,7 @@ namespace JX_Travel_Agency_Web_App.Migrations
                     b.HasIndex("Username")
                         .IsUnique();
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("JX_Travel_Agency_Web_App.Models.Flight", b =>

@@ -1,0 +1,51 @@
+﻿@model IFormCollection
+
+@{
+	ViewData["Title"] = "Add Passengers";
+}
+<div class="bg-transparent div-centerx pt-5">
+	<div class="rounded-3 shadow pb-5" style="background-color:#F5F5F5">
+		<div class="border-bottom text-center p-1">
+			<h1 class=" fw-light" style="color:#003783">Login</h1>
+		</div>
+
+		<div class="mx-auto py-1">
+			<span class="text-danger fs-5">@TempData["ErrorMsg"]</span>
+			<form action="AddPassengers" method="post">
+				@for (int i=0; i<int.Parse(TempData.Peek("Passengers").ToString());i++)
+				{
+					<div class="d-flex">
+						<div class="form-floating py-2">
+							<input type="text" name="Name" class="form-control shadow" placeholder="Name" />
+							<label name="Name"><i class="bi bi-person-fill" style="font-size:25px"></i>Name</label>
+							@* <span asp-validation-for="@Model[i].Name" class="text-danger"></span> *@
+						</div>
+						<div class="form-floating py-2">
+							<input type="int" name="Age" class="form-control shadow" placeholder="1" />
+							<label name="Age"><i class="bi bi-person-fill" style="font-size:25px"></i>Age</label>
+							@* <span asp-validation-for="@Model[i].Age" class="text-danger"></span> *@
+						</div>
+						<div class="form-floating py-2">
+							<select class="form-select" name="Gender">
+								<option selected>Male</option>
+								<option>Female</option>
+							</select>
+							<label name="Gender"><i class="bi bi-person-fill" style="font-size:25px"></i>Gender</label>
+							@* <span asp-validation-for="Gender" class="text-danger"></span> *@
+						</div>
+						<div class="form-floating py-2">
+							<input type="int" name="PhoneNumber" class="form-control shadow" placeholder="0000000000" />
+							<label name="PhoneNumber"><i class="bi bi-person-fill" style="font-size:25px"></i>Phone Number</label>
+							@* <span asp-validation-for="PhoneNumber" class="text-danger"></span> *@
+						</div>
+					</div>
+				}
+				<div class="div-centerx py-2">
+					<button type="submit" class="btn shadow fw-bold fs-5" style="color:#003783; background-color:#E0EEFC; width:100%">Proceed</button>
+				</div>
+			</form>
+		</div>
+
+	</div>
+</div>
+

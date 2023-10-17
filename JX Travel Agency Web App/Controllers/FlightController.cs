@@ -22,6 +22,7 @@ namespace JX_Travel_Agency_Web_App.Controllers
 		{
 			TempData["Passengers"] = flightQuery.Passengers;
 			TempData.Keep("Passengers");
+			ViewData["Class"]=flightQuery.Class.ToString();
 			var flightsList = _db.Flights
 				.Include(f => f.DepartureAirport)
 				.Include(f => f.ArrivalAirport)

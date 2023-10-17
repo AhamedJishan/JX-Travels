@@ -51,11 +51,18 @@ namespace JX_Travel_Agency_Web_App.Data
             modelBuilder.Entity<SeatInventory>()
                 .HasKey(nameof(SeatInventory.FlightId), nameof(SeatInventory.Class));
 
+            modelBuilder.Entity<Booking>()
+                .Property(f => f.BookingDate)
+                .HasDefaultValueSql("getdate()");
+
             base.OnModelCreating(modelBuilder);
         }
         public DbSet<Airport> Airports { get; set; }
         public DbSet<Flight> Flights { get; set; }
         public DbSet<SeatInventory> SeatInventories { get; set; }
         public DbSet<User> Users { get; set; }
-    }
+		public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<Passenger> Passengers { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
+	}
 }
