@@ -47,23 +47,36 @@ namespace JX_Travel_Agency_Web_App.Controllers
 
         public IActionResult AddPassengers()
         {
-            return View();
+            // Initializing the model before sending it to the view
+			List<Passenger> passengers = new List<Passenger>();
+			for (int i=0; i < int.Parse(TempData.Peek("Passengers").ToString()); i++)
+            {
+                passengers.Add(new Passenger());
+            }
+            
+            return View(passengers);
         }
         [HttpPost]
-		public IActionResult AddPassengers(IFormCollection form)
-		{
+		public IActionResult AddPassengers(List<Passenger> passengersInputList)
+	{
             if (ModelState.IsValid)
             {
                 string passengerIdString = "";
-                for (int i = 0; i < int.Parse(TempData.Peek("Passengers").ToString()); i++)
+                foreach (Passenger inputPassenger in passengersInputList)
                 {
-                    Passenger passenger = new Passenger()
-                    {
-                        Name = form["Name"][i].ToString(),
-						Age = int.Parse(form["Age"][i].ToString()),
-						Gender = form["Gender"][i].ToString(),
-						PhoneNumber = int.Parse(form["PhoneNumber"][i].ToString())
-					};
+     //               Passenger passenger = new Passenger()
+     //               {
+     //                   Name = form["Name"][i].ToString(),
+					//	Age = int.Parse(form["Age"][i].ToString()),
+					//	Gender = form["Gender"][i].ToString(),
+					//	PhoneNumber = int.Parse(form["PhoneNumber"][i].ToString())
+					//};
+                    Passenger passenger = new Passenger();
+                    passenger.Name= inputPassenger.Name;
+                    passenger.Age = inputPassenger.Age;
+                    passenger.Gender = inputPassenger.Gender;
+                    passenger.PhoneNumber = inputPassenger.PhoneNumber;
+
                     _db.Passengers.Add(passenger);
 					_db.SaveChanges();
 
@@ -75,8 +88,11 @@ namespace JX_Travel_Agency_Web_App.Controllers
                 TempData.Keep("PassengerIds");
 
                 return RedirectToAction(nameof(TicketConfirmation));
-            }
-            return View(form);
+            } else
+            {
+				return View(passengersInputList);
+			}
+            
 		}
 
 		public IActionResult TicketConfirmation()

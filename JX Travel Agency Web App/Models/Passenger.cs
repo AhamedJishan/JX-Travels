@@ -9,11 +9,13 @@ namespace JX_Travel_Agency_Web_App.Models
 		[Required]
 		public string Name { get; set; }
 		[Required]
+		[Range(1, 120, ErrorMessage = "Age must be between 1 and 120.")]
 		public int Age { get; set; }
 		[Required]
 		public string Gender { get; set; }
-		[MaxLength(10,ErrorMessage ="Phone Number can't be more than 10 digits!")]
-		public int PhoneNumber { get; set;}
+		[MaxLength(10, ErrorMessage ="Phone number needs 10 digits")]
+		[MinLength(10, ErrorMessage = "Phone number needs 10 digits")]
+		public string PhoneNumber { get; set;}
 
 		// Relationship
 		public Ticket? Ticket { get; set; }
