@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JX_Travel_Agency_Web_App.Models
 {
@@ -7,6 +8,7 @@ namespace JX_Travel_Agency_Web_App.Models
 	{
 		[Key]
 		public int BookingId { get; set; }
+		public int UserId { get; set; }
 		public DateTime? BookingDate { get; set; }
 		[Required]
 		public float TotalPrice { get; set; }
@@ -15,5 +17,7 @@ namespace JX_Travel_Agency_Web_App.Models
 
 		// Relationship
 		public virtual ICollection<Ticket>? Tickets { get; set; }
+		[ForeignKey(nameof(UserId))]
+		public virtual User User { get; set; }
 	}
 }

@@ -4,15 +4,127 @@
 	ViewData["Title"] = "Ticket Confirmation";
 }
 
-<div class="bg-transparent div-centerx pt-5">
-	<div class="rounded-3 shadow pb-5" style="background-color:#F5F5F5">
-		<div class="border-bottom text-center p-1">
-			<h1 class=" fw-light" style="color:#003783">Booking Successful</h1>
+<div class="mx-auto text-center">
+	<span class="alert-success fs-3 px-5">Booking Successful!</span>
+</div>
+
+<div class="bg-transparent div-centerx">
+	<div class="rounded-3 shadow" style="background-color:#F5F5F5; width:800px">
+		<div class="border-bottom text-center d-flex justify-content-between px-3">
+			<h5 class="" style="color:#003783">Booking Id: @Model.BookingId</h5>
+			<h5 class="" style="color:#003783">Date: @Model.BookingDate.Value.ToShortDateString()</h5>
 		</div>
 
 		<div class="mx-auto py-1">
-			<h1>@Model.BookingId</h1>
-		</div>
+			@foreach (Ticket ticket in Model.Tickets)
+			{
+				<div class="border m-2 d-flex">
+					@* Ticket *@
+					<div class="border-end rounded-start" style="width:67%">
+						@* Ticket Heading *@
+						<div class="d-flex rounded-start justify-content-between" style="height:55px; color:#E0EEFC; background-color:#003783">
+							<div class="d-flex">
+								<i class="bi bi-airplane-fill my-auto px-2"></i>
+								<h3 class="my-auto fw-normal">JX Travels</h3>
+							</div>
+							<div class="flex-column">
+								<h5 class="fw-normal text-end pe-2">Boarding Pass</h5>
+								<h6 class="fw-normal text-end pe-2"><i>@ticket.Class</i></h6>
+							</div>
+						</div>
+						@* Ticket details *@
+						<div>
+							<div class="px-4 py-2 d-block" style="line-height:1">
+								<span class="d-block text-secondary fw-light small">Passenger Name</span>
+								<span class="d-block text-uppercase">@ticket.Passenger.Name</span>
+							</div>
+							<div class="d-flex">
+								<div class="px-4" style="width:50%">
+									<div class="py-2" style="line-height:1">
+										<span class="d-block text-secondary fw-light small">From</span>
+										<span class="d-block text-uppercase">@ticket.Flight.DepartureAirport.City</span>
+									</div>
+									<div class="py-2" style="line-height:1">
+										<span class="d-block text-secondary fw-light small">To</span>
+										<span class="d-block text-uppercase">@ticket.Flight.ArrivalAirport.City</span>
+									</div>
+									<div class="py-2" style="line-height:1">
+										<span class="d-block text-secondary fw-light small">Flight</span>
+										<span class="d-block text-uppercase fw-bold">@ticket.Flight.FlightNumber</span>
+									</div>
+								</div>
+								<div class="px-4" style="width:50%">
+									<div class="py-2" style="line-height:1">
+										<span class="d-block text-secondary fw-light small">Carrier</span>
+										<span class="d-block text-uppercase">@ticket.Flight.AirlineName</span>
+									</div>
+									<div class="py-2 d-flex justify-content-between" style="line-height:1">
+										<div style="width:50%">
+											<span class="d-block text-secondary fw-light small">Date</span>
+											<span class="d-block text-uppercase">@ticket.Flight.DepartureTime.ToShortDateString()</span>
+										</div>
+										<div style="width:50%">
+											<span class="d-block text-secondary fw-light small">Time</span>
+											<span class="d-block text-uppercase">@ticket.Flight.DepartureTime.ToShortTimeString()</span>
+										</div>
+									</div>
+									<div class="py-2" style="line-height:1">
+										<span class="d-block text-secondary fw-light small">Board Till</span>
+										<span class="d-block text-uppercase fw-bold">@ticket.Flight.DepartureTime.AddMinutes(-30).ToShortTimeString()</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="border-start rounded-end" style="width:33%">
+						<div class="flex-column" style="height:55px; color:#E0EEFC; background-color:#003783">
+							<h5 class="fw-normal text-end pe-2">Boarding Pass</h5>
+							<h6 class="fw-normal text-end pe-2"><i>@ticket.Class</i></h6>
+						</div>
 
+						<div class="px-4" style="width:100%">
+							<div class="py-2 d-block" style="line-height:1">
+								<span class="d-block text-secondary fw-light small">Passenger Name</span>
+								<span class="d-block text-uppercase">@ticket.Passenger.Name</span>
+							</div>
+							<div class="py-2 d-flex justify-content-between" style="line-height:1">
+								<div style="width:50%">
+									<span class="d-block text-secondary fw-light small">From</span>
+									<span class="d-block text-uppercase">@ticket.Flight.DepartureAirport.City</span>
+								</div>
+								<div style="width:50%">
+									<span class="d-block text-secondary fw-light small">To</span>
+									<span class="d-block text-uppercase">@ticket.Flight.ArrivalAirport.City</span>
+								</div>
+							</div>
+							<div class="py-2 d-flex justify-content-between" style="line-height:1">
+								<div style="width:50%">
+									<span class="d-block text-secondary fw-light small">Date</span>
+									<span class="d-block text-uppercase">@ticket.Flight.DepartureTime.ToShortDateString()</span>
+								</div>
+								<div style="width:50%">
+									<span class="d-block text-secondary fw-light small">Time</span>
+									<span class="d-block text-uppercase">@ticket.Flight.DepartureTime.ToShortTimeString()</span>
+								</div>
+							</div>
+							<div class="py-2 d-flex justify-content-between" style="line-height:1">
+								<div style="width:50%">
+									<span class="d-block text-secondary fw-light small">Flight</span>
+									<span class="d-block text-uppercase fw-bold">@ticket.Flight.FlightNumber</span>
+								</div>
+								<div style="width:50%">
+									<span class="d-block text-secondary fw-light small">Board Till</span>
+									<span class="d-block text-uppercase fw-bold">@ticket.Flight.DepartureTime.AddMinutes(-30).ToShortTimeString()</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			}
+		</div>
+		<div class="mx-auto py-1">
+			<h4>Total Amount: &#8377; @Model.TotalPrice</h4>
+		</div>
 	</div>
 </div>

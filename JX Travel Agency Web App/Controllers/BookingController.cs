@@ -2,12 +2,14 @@
 using JX_Travel_Agency_Web_App.Data.Enums;
 using JX_Travel_Agency_Web_App.Models;
 using JX_Travel_Agency_Web_App.Models.QueryModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace JX_Travel_Agency_Web_App.Controllers
 {
+    [Authorize]
 	public class BookingController : Controller
 	{
 		private readonly AppDbContext _db;
@@ -30,7 +32,8 @@ namespace JX_Travel_Agency_Web_App.Controllers
 
             Booking booking = new Booking()
             {
-                TotalPrice = int.Parse(parameters[2].ToString())
+                TotalPrice = int.Parse(parameters[2].ToString()) * int.Parse(TempData["Passengers"].ToString()),
+                UserId = _db.Users.FirstOrDefault(u=>u.Username==User.Identity.Name).Id
             };
             _db.Add(booking);
             _db.SaveChanges();
@@ -78,32 +81,41 @@ namespace JX_Travel_Agency_Web_App.Controllers
 
 		public IActionResult TicketConfirmation()
 		{
-            string TicketIds ="";
-            foreach (string flightId in TempData.Peek("FlightIdList").ToString().Split("_"))
+            if (TempData.ContainsKey("FlightIdList"))
             {
-                foreach (string passengerId in TempData.Peek("PassengerIds").ToString().Split("_"))
-                {
-                    Ticket ticket = new Ticket();
-                    ticket.BookingId = int.Parse(TempData.Peek("BookingId").ToString());
-                    ticket.PassengerId = int.Parse(passengerId);
-					ticket.FlightId = int.Parse(flightId);
-					ticket.Class = TempData.Peek("Class").ToString();
-                    ticket.Price = int.Parse(TempData.Peek("TotalPrice").ToString());
+				foreach (string flightId in TempData.Peek("FlightIdList").ToString().Split("_"))
+				{
+					foreach (string passengerId in TempData.Peek("PassengerIds").ToString().Split("_"))
+					{
+						Ticket ticket = new Ticket();
+						ticket.BookingId = int.Parse(TempData.Peek("BookingId").ToString());
+						ticket.PassengerId = int.Parse(passengerId);
+						ticket.FlightId = int.Parse(flightId);
+						ticket.Class = TempData.Peek("Class").ToString();
+						ticket.Price = int.Parse(TempData.Peek("TotalPrice").ToString());
 
 
-					_db.Tickets.Add(ticket);
-                    _db.SaveChanges();
-                    TicketIds += ticket.TicketId.ToString();
-                }
-            }
-
-            TempData["TickeIds"] = TicketIds;
-            TempData.Keep("TicketIds");
+						_db.Tickets.Add(ticket);
+						_db.SaveChanges();
+					}
+				}
+                // Clear Temp Datas
+                TempData.Remove("FlightIdList");
+				TempData.Remove("PassengerIds");
+				TempData.Remove("Class");
+				TempData.Remove("TotalPrice");
+			}
 
             Booking? bookingData = _db.Bookings
                 .Include(t=>t.Tickets)
-                .ThenInclude(p=>p.Passenger)
-                .FirstOrDefault(b=>b.BookingId==int.Parse(TempData.Peek("BookingId").ToString()));
+                    .ThenInclude(p=>p.Passenger)
+                .Include(t=>t.Tickets)
+                    .ThenInclude(f => f.Flight)
+                    .ThenInclude(da=>da.DepartureAirport)
+				.Include(t => t.Tickets)
+					.ThenInclude(f => f.Flight)
+                    .ThenInclude(aa=>aa.ArrivalAirport)
+				.FirstOrDefault(b=>b.BookingId==int.Parse(TempData.Peek("BookingId").ToString()));
 
 			return View(bookingData);
 		}
