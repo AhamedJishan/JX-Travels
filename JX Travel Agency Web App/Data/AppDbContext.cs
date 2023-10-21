@@ -55,6 +55,10 @@ namespace JX_Travel_Agency_Web_App.Data
                 .Property(f => f.BookingDate)
                 .HasDefaultValueSql("getdate()");
 
+            modelBuilder.Entity<Ticket>()
+                .HasIndex(t => t.PassengerId)
+                .IsUnique(false);
+
             base.OnModelCreating(modelBuilder);
         }
         public DbSet<Airport> Airports { get; set; }

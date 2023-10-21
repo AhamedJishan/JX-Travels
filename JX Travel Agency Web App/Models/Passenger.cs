@@ -18,6 +18,6 @@ namespace JX_Travel_Agency_Web_App.Models
 		public string PhoneNumber { get; set;}
 
 		// Relationship
-		public Ticket? Ticket { get; set; }
+		public List<Ticket>? Ticket { get; set; }
 	}
 }

@@ -9,8 +9,8 @@
 </div>
 
 <div class="bg-transparent div-centerx">
-	<div class="rounded-3 shadow" style="background-color:#F5F5F5; width:800px">
-		<div class="border-bottom text-center d-flex justify-content-between px-3">
+	<div class="rounded-3 shadow overflow-auto" style="background-color:#F5F5F5; width:800px; height:800px">
+		<div class="border-bottom text-center d-flex justify-content-between px-3" style="background-color:#F5F5F5;position:sticky; top:0">
 			<h5 class="" style="color:#003783">Booking Id: @Model.BookingId</h5>
 			<h5 class="" style="color:#003783">Date: @Model.BookingDate.Value.ToShortDateString()</h5>
 		</div>
@@ -18,7 +18,7 @@
 		<div class="mx-auto py-1">
 			@foreach (Ticket ticket in Model.Tickets)
 			{
-				<div class="border m-2 d-flex">
+				<div class="border m-2 d-flex shadow">
 					@* Ticket *@
 					<div class="border-end rounded-start" style="width:67%">
 						@* Ticket Heading *@
@@ -123,7 +123,7 @@
 				</div>
 			}
 		</div>
-		<div class="mx-auto py-1 d-flex">
+		<div class="mx-auto py-1 d-flex border" style="background-color:#F5F5F5;position:sticky; bottom:0">
 			<h4 class="fw-light">Total Amount: </h4>
 			<h4 class="text-success"><b>&#8377; @Model.TotalPrice</b></h4>
 		</div>

@@ -33,7 +33,8 @@ namespace JX_Travel_Agency_Web_App.Controllers
             Booking booking = new Booking()
             {
                 TotalPrice = int.Parse(parameters[2].ToString()) * int.Parse(TempData["Passengers"].ToString()),
-                UserId = _db.Users.FirstOrDefault(u=>u.Username==User.Identity.Name).Id
+                UserId = _db.Users.FirstOrDefault(u=>u.Username==User.Identity.Name).Id,
+                Status="Pending"
             };
             _db.Add(booking);
             _db.SaveChanges();
@@ -43,6 +44,24 @@ namespace JX_Travel_Agency_Web_App.Controllers
             TempData.Keep("BookingId");
 
             return RedirectToAction(nameof(AddPassengers));
+        }
+
+        public IActionResult MyBookings()
+        {
+            User? user = _db.Users.FirstOrDefault(u => u.Username.Equals(User.Identity.Name));
+
+			List<Booking> bookings = _db.Bookings
+                .Include(t => t.Tickets)
+                    .ThenInclude(p => p.Passenger)
+                .Include(t => t.Tickets)
+                    .ThenInclude(f => f.Flight)
+                    .ThenInclude(da => da.DepartureAirport)
+                .Include(t => t.Tickets)
+                    .ThenInclude(f => f.Flight)
+                    .ThenInclude(aa => aa.ArrivalAirport)
+                .Where(b=>b.UserId==user.Id).ToList();
+
+			return View(bookings);
         }
 
         public IActionResult AddPassengers()
@@ -64,13 +83,6 @@ namespace JX_Travel_Agency_Web_App.Controllers
                 string passengerIdString = "";
                 foreach (Passenger inputPassenger in passengersInputList)
                 {
-     //               Passenger passenger = new Passenger()
-     //               {
-     //                   Name = form["Name"][i].ToString(),
-					//	Age = int.Parse(form["Age"][i].ToString()),
-					//	Gender = form["Gender"][i].ToString(),
-					//	PhoneNumber = int.Parse(form["PhoneNumber"][i].ToString())
-					//};
                     Passenger passenger = new Passenger();
                     passenger.Name= inputPassenger.Name;
                     passenger.Age = inputPassenger.Age;
@@ -132,6 +144,11 @@ namespace JX_Travel_Agency_Web_App.Controllers
 					.ThenInclude(f => f.Flight)
                     .ThenInclude(aa=>aa.ArrivalAirport)
 				.FirstOrDefault(b=>b.BookingId==int.Parse(TempData.Peek("BookingId").ToString()));
+
+            //set booking status to Booked
+            bookingData.Status = "Booked";
+            _db.Bookings.Update(bookingData);
+            _db.SaveChanges();
 
 			return View(bookingData);
 		}
