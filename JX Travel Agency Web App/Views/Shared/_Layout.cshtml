@@ -43,7 +43,7 @@
                                     if (User.IsInRole("Admin"))
                                     {
                                         <li class="nav-item">
-                                            <a asp-controller="Account" asp-action="Logout" class="nav-link text-white"><i class="bi bi-person-fill"></i>Hey, @User.Identity.Name (Admin)</a>
+                                            <a asp-controller="Booking" asp-action="Mybookings" class="nav-link text-white"><i class="bi bi-person-fill"></i>Hey, @User.Identity.Name (Admin)</a>
                                         </li>
                                     } else
                                     {
